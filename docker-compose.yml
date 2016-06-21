@@ -22,7 +22,7 @@ services:
     environment:
       # All containers will join this network
       DOCKER_NETWORK_NAME: kooplex_koopinet
-      EXT_SERV_IP: grail06.elte.hu
+      EXT_SERV_IP: EXTERNAL_IP_OF_THE_SERVER_YOU_ARE_RUNNING_THIS_SERVICE
 
 
 networks:
