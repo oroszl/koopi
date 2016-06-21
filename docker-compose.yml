@@ -1,0 +1,30 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+# JupyterHub docker-compose configuration file
+version: "2"
+
+services:
+  koopi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kooplex/koopi
+    container_name: kdaemon 
+    volumes:
+      # Bind Docker socket on the host so we can connect to the daemon from
+      # within the container
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+    ports:
+      - "8000:8000"
+    networks:
+      - koopinet
+    environment:
+      # All containers will join this network
+      DOCKER_NETWORK_NAME: kooplex_koopinet
+      EXT_SERV_IP: grail06.elte.hu
+
+
+networks:
+  koopinet:
+    driver: bridge
