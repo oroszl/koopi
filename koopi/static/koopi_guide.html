@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Title</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="koopi-userguide">Koopi userguide</h1>
+
+<p>Koopi intends to be a “poor man’s <a href="http://mybinder.org">binder</a>“. At the moment it is a simple <a href="http://flask.pocoo.org/"><code>flask</code></a> script and uses jupyter’s <a href="https://github.com/jupyterhub/configurable-http-proxy"><code>configurable-http-proxy</code></a> <br>
+In case of our demo service use  <code>KOOPI_URL=grail06.elet.hu</code> and <code>KOOPI_PORT=8000</code>.</p>
+
+<h3 id="build-images">Build images</h3>
+
+<p>To build images from a github repository containing <a href="http://jupyter.org">jupyter</a> notebooks and an optional <code>pip</code> installable  <code>requirements.txt</code> <br>
+call </p>
+
+
+
+<pre class="prettyprint"><code class="language-c hljs ">http:<span class="hljs-comment">//KOOPI_URL:KOOPI_PORT/koopi/build?gitlink=GIT_CLONEABLE_LINK</span></code></pre>
+
+<p>for example</p>
+
+<pre class="prettyprint"><code class="language-c hljs ">http:<span class="hljs-comment">//KOOPI_URL:KOOPI_PORT/koopi/build?gitlink=https://github.com/icsabai/grnadesign.git</span></code></pre>
+
+<p>Use only <strong>lowercase</strong> letters ! The built image will be available for spawning with image name <code>koopi_image_GIT_REPO_NAME</code> that is in the above example we create <code>koopi_image_grnadesign</code>. The images are built on top of <code>jupyter/scipy-notebook</code> docker container.</p>
+
+<h3 id="spawn-a-container">Spawn a container</h3>
+
+<p>To spawn a container call</p>
+
+
+
+<pre class="prettyprint"><code class="language-c hljs ">http:<span class="hljs-comment">//KOOPI_URL:KOOPI_PORT/koopi/spawn?image=koopi_image_GIT_REPO_NAME</span></code></pre>
+
+<p>This will spawn a container based on the image <code>koopi_image_GIT_REPO_NAME</code>  if no image name is supplied <code>jupyter/scipy-notebook</code> based container is spawned. <br>
+The container name will be <code>koopi_user_at_CONTAINER_ID</code> where <code>CONTAINER_ID</code> is a random string unique to the container.</p>
+
+<h3 id="list-images-currently-available">List images currently available</h3>
+
+<p>To list images currently built visit </p>
+
+<pre class="prettyprint"><code class="language-c hljs ">http:<span class="hljs-comment">//KOOPI_URL:KOOPI_PORT/koopi/list_images</span></code></pre>
+
+<p>Clicking an element of the list an appropriate container is spawned.</p>
+
+<h3 id="list-currently-running-containers">List currently running containers</h3>
+
+<p>To list containers currently running visit </p>
+
+<pre class="prettyprint"><code class="language-c hljs ">http:<span class="hljs-comment">//KOOPI_URL:KOOPI_PORT/koopi/list_container</span></code></pre>
+
+<h3 id="remove-running-containers">Remove running containers</h3>
+
+<p>To remove a container</p>
+
+<pre class="prettyprint"><code class="language-c hljs ">http:<span class="hljs-comment">//KOOPI_URL:KOOPI_PORT/koopi/remove?c_id=CONTAINER_ID</span></code></pre></div></body>
+</html>
