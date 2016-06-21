@@ -1,6 +1,6 @@
 # Koopi userguide
 Koopi intends to be a "poor man's [binder](http://mybinder.org)". At the moment it is a simple [`flask`](http://flask.pocoo.org/) script and uses jupyter's [`configurable-http-proxy`](https://github.com/jupyterhub/configurable-http-proxy)
-In case of our demo service use  `KOOPI_URL=grail06.elet.hu` and `KOOPI_PORT=8000`.
+
 ### Build images
 To build images from a github repository containing [jupyter](http://jupyter.org) notebooks and an optional `pip` installable  `requirements.txt`
 call 
