@@ -168,9 +168,18 @@ def list_running_containers():
     """
     Simple function to list containers currently running.
     """
+    hreflink='http://'+external_service_ip+       \
+             ':'+str(proxy_port)+service_prefix+  \
+             '/remove?c_id='
 
     service_containers=[                           \
-          cont['Names'][0]+'<br>'                  \
+          '{0} '.format(cont['Names'][0])          \
+          +'<a href="' + hreflink                  \
+          +'{0}" '                                 \
+          .format(cont['Names'][0].split('_')[-1]) \
+          +'style="color:rgb(255,0,0)">'           \
+          +'<font color="red">Delete</font></a>'   \
+          +'<br>'                                  \
           for cont in docli.containers()           \
           if container_prefix in cont['Names'][0] ]
 
