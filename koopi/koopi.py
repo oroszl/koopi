@@ -163,7 +163,8 @@ def list_built_images():
           '{0}">{0}</a>'.format(                   \
           cont['RepoTags'][0])+'<br>'              \
           for cont in docli.images()               \
-          if image_prefix in cont['RepoTags'][0] ]
+          if (cont['RepoTags'][0]                  \
+          and image_prefix in cont['RepoTags'][0]) ]
 
     return '<h1>Images</h1>'+\
            ''.join(service_images)
