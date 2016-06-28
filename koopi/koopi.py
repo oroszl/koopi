@@ -38,12 +38,16 @@ def spawn_container(args):
     docli=args['docli']
     container_name=container_prefix+args['c_id']
 
+    removelink='http://'+external_service_ip+       \
+             ':'+str(proxy_port)+service_prefix+  \
+             '/remove?c_id='+args['c_id']
     container = docli.create_container(
     image=args['image'],
     detach=True,
     name=container_name,
-    command='jupyter notebook --NotebookApp.base_url=/'+\
-               args['c_id']
+    command='python3 koopi_singleuser.py --KoopiUserNotebookApp.remove_url="'+\
+            removelink+\
+            '" --NotebookApp.base_url=/'+args['c_id']
     )
 
     # starting the container and connecting it to the 
@@ -130,7 +134,8 @@ RUN if [ -f requirements.txt ] ; then \
     pip install -r requirements.txt ; \
     else \
     echo "No additional packages installed" ; \
-    fi; 
+    fi;
+ADD https://raw.githubusercontent.com/oroszl/koopi/master/koopi_singleuser.py /usr/local/bin/
 USER jovyan
     """%(gitrepo)
     f = BytesIO(dockerfile.encode('utf-8'))
