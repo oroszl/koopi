@@ -27,7 +27,7 @@ class KoopiUserNotebookApp(NotebookApp):
         # this illustrates the values of some internal url type strings
         env = self.web_app.settings['jinja2_env']
         #env.globals['stop_link'] = 'http://www.google.com/'+self.default_url
-        env.globals['stop_link'] = KoopiUserNotebookApp.remove_url
+        env.globals['stop_link'] = self.remove_url
 
         # patch jinja env loading to modify page template
         def get_page(name):

@@ -45,8 +45,8 @@ def spawn_container(args):
     image=args['image'],
     detach=True,
     name=container_name,
-    command='python3 koopi_singleuser.py --KoopiUserNotebookApp.remove_url="'+\
-            removelink+\
+    command='python3 /usr/local/bin/koopi_singleuser.py'+\
+            ' --KoopiUserNotebookApp.remove_url="'+removelink+\
             '" --NotebookApp.base_url=/'+args['c_id']
     )
 
@@ -141,6 +141,7 @@ RUN if [ -f requirements.txt ] ; then \
     echo "No additional packages installed" ; \
     fi;
 ADD https://raw.githubusercontent.com/oroszl/koopi/master/koopi_singleuser.py /usr/local/bin/
+RUN chown jovyan:users /usr/local/bin/koopi_singleuser.py
 USER jovyan
     """%(gitrepo)
     f = BytesIO(dockerfile.encode('utf-8'))
