@@ -74,9 +74,13 @@ def spawn():
     # determine the image to be run   
     image=request.args.get('image','jupyter/scipy-notebook')
 
+    # determine the tail of the base url
+    tail=request.args.get('tail','/')
+	
     args={ 'image': image,
            'docli': docli,
-            'c_id': c_id  }
+           'c_id' : c_id,
+           'tail' : tail }
 
     # execute launch function
     result = spawn_container(args)
@@ -92,7 +96,8 @@ def spawn():
     redir_addr='http://'+               \
                external_service_ip+':'+ \
                str(proxy_port)+         \
-               '/'+args['c_id']
+               '/'+args['c_id']+        \
+               args['tail']
     # we wait for 3 sec for the container to be up and running
     sleep(3)  
     # we return by redirecting the browser to the redirect address
@@ -163,7 +168,8 @@ def list_built_images():
           '{0}">{0}</a>'.format(                   \
           cont['RepoTags'][0])+'<br>'              \
           for cont in docli.images()               \
-          if image_prefix in cont['RepoTags'][0] ]
+          if (cont['RepoTags'][0]                  \
+          and image_prefix in cont['RepoTags'][0]) ]
 
     return '<h1>Images</h1>'+\
            ''.join(service_images)
