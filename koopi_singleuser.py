@@ -3,6 +3,9 @@
 
 from jinja2 import ChoiceLoader, FunctionLoader
 from notebook.notebookapp import NotebookApp
+from traitlets import (
+    Unicode, Integer
+)
 
 page_template = """
 {% extends "templates/page.html" %}
@@ -19,14 +22,15 @@ STOP</a>
 
 
 class KoopiUserNotebookApp(NotebookApp):
-      remove_url = ''
+      remove_url = Unicode(u'', config=True,
+        help="""The remove url which is used by the button 'Stop'."""
+      )
 
       def patch_templates(self):
 
         # let us point to some crasy urls with the buttons
         # this illustrates the values of some internal url type strings
         env = self.web_app.settings['jinja2_env']
-        #env.globals['stop_link'] = 'http://www.google.com/'+self.default_url
         env.globals['stop_link'] = self.remove_url
 
         # patch jinja env loading to modify page template
